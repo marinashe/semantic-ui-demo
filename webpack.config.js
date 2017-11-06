@@ -57,18 +57,8 @@ const COMMON_CONFIG = {
         include: APP_PATH
       },
       {
-        test: /\.(sass)$/,
-        include: APP_PATH,
-        use: [
-          'style-loader',
-          cssLoader,
-          postcssLoader,
-          sassLoader
-        ]
-      },
-      {
         test: /\.css$/,
-        include: /node_modules/,
+        include: NODE_MODULES_PATH,
         use: extractCSS.extract({
           fallback: "style-loader",
           use: [
@@ -86,6 +76,16 @@ const COMMON_CONFIG = {
             limit: 100000,
           },
         },
+      },
+      {
+        test: /\.(sass)$/,
+        include: APP_PATH,
+        use: [
+          'style-loader',
+          cssLoader,
+          postcssLoader,
+          sassLoader
+        ]
       },
     ]
   },
@@ -119,7 +119,7 @@ const COMMON_CONFIG = {
     new webpack.NamedChunksPlugin(),
 
     new htmlWebpackPlugin({
-      title: 'react webpack-2 react-hot-loader-v3 react-router-v4 boilerplate',
+      title: 'Semantic UI',
       template: './config/index.ejs',
       chunks: ['vendor', 'client'],
       inlineManifestWebpackName: 'webpackManifest',

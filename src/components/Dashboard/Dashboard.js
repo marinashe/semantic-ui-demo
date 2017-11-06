@@ -1,13 +1,10 @@
 import React from 'react';
-import { Button } from 'semantic-ui-react';
+import Classes from './styles';
+import ConnectLists from '../Lists/container';
 
 const Dashboard = () => (
-  <div>
-    Async Loaded Dashboard Page
-    <Button>
-      Click Here
-    </Button>
-    <Button primary>Primary</Button>
+  <div className={ Classes.root }>
+    <ConnectLists />
   </div>
 );
 Dashboard.displayName = 'Dashboard';
