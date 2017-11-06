@@ -5,6 +5,8 @@ const webpack           = require('webpack');
 const webpackMerge      = require('webpack-merge');
 const eslintFormatter   = require('react-dev-utils/eslintFormatter');
 const htmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractCSS = new ExtractTextPlugin('semantic/semantic.min.css');
 
 const DEVELOPMENT_CONFIG = require('./config/webpack.dev');
 const PRODUCTION_CONFIG  = require('./config/webpack.prod');
@@ -55,7 +57,7 @@ const COMMON_CONFIG = {
         include: APP_PATH
       },
       {
-        test: /\.sass$/,
+        test: /\.(sass)$/,
         include: APP_PATH,
         use: [
           'style-loader',
@@ -63,14 +65,36 @@ const COMMON_CONFIG = {
           postcssLoader,
           sassLoader
         ]
-      }
+      },
+      {
+        test: /\.css$/,
+        include: /node_modules/,
+        use: extractCSS.extract({
+          fallback: "style-loader",
+          use: [
+            {
+              loader: 'css-loader',
+            },
+          ],
+        }),
+      },
+      {
+        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 100000,
+          },
+        },
+      },
     ]
   },
 
   resolve: {
     extensions: [
       '.js',
-      '.sass'
+      '.sass',
+      '.css'
     ],
     modules: [
       NODE_MODULES_PATH
@@ -100,6 +124,7 @@ const COMMON_CONFIG = {
       chunks: ['vendor', 'client'],
       inlineManifestWebpackName: 'webpackManifest',
     }),
+    extractCSS,
   ],
 
   node: {
