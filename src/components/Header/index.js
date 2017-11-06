@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Header, Icon } from 'semantic-ui-react';
+import { Header, Icon, Button } from 'semantic-ui-react';
 import Classes from './styles';
 
 const links = [
@@ -25,6 +25,22 @@ const HeaderApp = () => (
           />
         ))}
       </Header.Subheader>
+    </div>
+    <div>
+      <Button
+        color='red'
+        content='Like'
+        icon='heart'
+        label={{ basic: true, color: 'red', pointing: 'left', content: '2,048' }}
+      />
+
+      <Button
+        basic
+        color='blue'
+        content='Fork'
+        icon='fork'
+        label={{ as: 'a', basic: true, color: 'blue', pointing: 'left', content: '1,048' }}
+      />
     </div>
   </Header>
 );
