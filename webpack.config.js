@@ -57,6 +57,18 @@ const COMMON_CONFIG = {
         include: APP_PATH
       },
       {
+        test: /\.(sass)$/,
+        include: APP_PATH,
+        loader: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            cssLoader,
+            postcssLoader,
+            sassLoader
+          ]
+        })
+      },
+      {
         test: /\.css$/,
         include: NODE_MODULES_PATH,
         use: extractCSS.extract({
@@ -76,16 +88,6 @@ const COMMON_CONFIG = {
             limit: 100000,
           },
         },
-      },
-      {
-        test: /\.(sass)$/,
-        include: APP_PATH,
-        use: [
-          'style-loader',
-          cssLoader,
-          postcssLoader,
-          sassLoader
-        ]
       },
     ]
   },
@@ -125,6 +127,11 @@ const COMMON_CONFIG = {
       inlineManifestWebpackName: 'webpackManifest',
     }),
     extractCSS,
+    new ExtractTextPlugin({
+      filename: '[name]-[contenthash].css',
+      disable: false,
+      allChunks: true
+    }),
   ],
 
   node: {
